@@ -67,7 +67,7 @@ export const listing = {
 
   // Property type headline (renders where "Entire villa hosted by…" used to)
   propertyType: 'Entire serviced apartment in Candolim, India',
-  stats: { guests: 2, bedrooms: 1, beds: 1, baths: 1 },
+  stats: { guests: 3, bedrooms: 1, beds: 1, baths: 1 },
 
   rating: {
     overall: 4.95,

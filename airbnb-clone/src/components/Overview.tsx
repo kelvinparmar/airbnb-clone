@@ -45,7 +45,7 @@ export default function Overview() {
           {/* Reviews column */}
           <div className="px-6 py-4 text-center border-l border-hairline flex flex-col justify-center">
             <p className="text-lg font-semibold leading-none">{rating.reviewsCount}</p>
-            #reviews
+            Reviews
           </div>
         </div>
       </div>
