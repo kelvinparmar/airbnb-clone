@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Drop your licensed Airbnb Cereal VF into public/fonts/ and uncomment: */
+/*
+@font-face {
+  font-family: 'Cereal';
+  src: url('/fonts/AirbnbCerealVF.woff2') format('woff2-variations');
+  font-weight: 300 800;
+  font-display: swap;
+}
+*/
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  :focus-visible { outline: 2px solid #222; outline-offset: 2px; border-radius: 6px; }
+  ::selection { background: #FFE1E7; color: #222; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-ink px-4 py-2.5
+           text-sm font-semibold text-white transition-transform duration-150
+           hover:bg-black active:scale-[0.98] shadow-cta;
+  }
+  .btn-reserve {
+    @apply block w-full rounded-lg py-3.5 text-white font-semibold text-base
+           transition-transform duration-150 active:scale-[0.99]
+           bg-gradient-to-r from-[#E61E4D] via-[#E31C5F] to-[#D70466]
+           hover:brightness-105 shadow-cta;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-sm
+           font-medium text-ink hover:bg-surface-strong transition-colors;
+  }
+  .pill {
+    @apply flex items-center rounded-pill bg-white shadow-pill hover:shadow-pillHover
+           border border-hairline transition-shadow;
+  }
+  .hairline { @apply border-t border-hairline; }
+
+  /* Review category tags/pills used under the ratings breakdown */
+  .review-pill {
+    @apply inline-flex items-center gap-1.5 rounded-pill border border-hairline
+           px-3 py-1.5 text-xs font-semibold text-body hover:border-ink transition-colors;
+  }
+}
+
+@keyframes overlay-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes overlay-slide-up { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes lightbox-zoom-in { from { transform: scale(0.98); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.animate-overlay-fade { animation: overlay-fade-in 220ms cubic-bezier(0.2,0,0,1) both; }
+.animate-overlay-up { animation: overlay-slide-up 260ms cubic-bezier(0.2,0,0,1) both; }
+.animate-lightbox { animation: lightbox-zoom-in 200ms cubic-bezier(0.2,0,0,1) both; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-overlay-fade, .animate-overlay-up, .animate-lightbox {
+    animation-duration: 1ms;
+  }
+}

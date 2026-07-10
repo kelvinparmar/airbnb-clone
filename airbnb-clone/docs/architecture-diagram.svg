@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif">
+  <defs>
+    <style>
+      .title { font-size: 26px; font-weight: 700; fill: #222; }
+      .subtitle { font-size: 14px; fill: #6a6a6a; }
+      .layer { font-size: 15px; font-weight: 700; fill: #222; }
+      .box-title { font-size: 14px; font-weight: 700; fill: #222; }
+      .box-sub { font-size: 11px; fill: #3f3f3f; }
+      .arrow { stroke: #6a6a6a; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+      .arrow-async { stroke: #FF385C; stroke-width: 1.6; stroke-dasharray: 5 4; fill: none; marker-end: url(#arrow-pink); }
+      .band { fill: #F7F7F7; stroke: #ebebeb; }
+      .box { fill: #ffffff; stroke: #dddddd; stroke-width: 1.2; }
+      .box-brand { fill: #fff; stroke: #FF385C; stroke-width: 1.6; }
+      .box-store { fill: #fff; stroke: #428BFF; stroke-width: 1.4; }
+      .legend { font-size: 12px; fill: #3f3f3f; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6a6a6a"/></marker>
+    <marker id="arrow-pink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#FF385C"/></marker>
+  </defs>
+
+  <text x="40" y="46" class="title">Airbnb-Scale Vacation-Rental Marketplace — High-Level Architecture</text>
+  <text x="40" y="70" class="subtitle">Read-heavy (search / browse) served from the edge; write-heavy (booking, messaging, payments) through core services on strongly-consistent stores.</text>
+
+  <!-- Layer 1 -->
+  <rect x="30" y="100" width="1540" height="150" rx="14" class="band"/>
+  <text x="50" y="128" class="layer">1 · Client &amp; Edge</text>
+  <rect x="60"  y="150" width="220" height="80" rx="10" class="box"/><text x="170" y="180" class="box-title" text-anchor="middle">Web (Next.js RSC)</text><text x="170" y="200" class="box-sub" text-anchor="middle">SSR + Streaming</text><text x="170" y="216" class="box-sub" text-anchor="middle">Route-level ISR cache</text>
+  <rect x="300" y="150" width="220" height="80" rx="10" class="box"/><text x="410" y="180" class="box-title" text-anchor="middle">iOS / Android</text><text x="410" y="200" class="box-sub" text-anchor="middle">React Native + native modules</text><text x="410" y="216" class="box-sub" text-anchor="middle">Offline booking cache</text>
+  <rect x="540" y="150" width="240" height="80" rx="10" class="box-brand"/><text x="660" y="180" class="box-title" text-anchor="middle">Global CDN (multi-region)</text><text x="660" y="200" class="box-sub" text-anchor="middle">Static assets, WebP/AVIF images</text><text x="660" y="216" class="box-sub" text-anchor="middle">Signed URLs · Brotli · HTTP/3</text>
+  <rect x="800" y="150" width="240" height="80" rx="10" class="box-brand"/><text x="920" y="180" class="box-title" text-anchor="middle">Edge Workers</text><text x="920" y="200" class="box-sub" text-anchor="middle">Auth cookie verification</text><text x="920" y="216" class="box-sub" text-anchor="middle">A/B routing · Geo / language</text>
+  <rect x="1060" y="150" width="240" height="80" rx="10" class="box-brand"/><text x="1180" y="180" class="box-title" text-anchor="middle">WAF · DDoS · Bot mgmt</text><text x="1180" y="200" class="box-sub" text-anchor="middle">Rate limits per IP/session</text><text x="1180" y="216" class="box-sub" text-anchor="middle">Fraud scoring hooks</text>
+  <rect x="1320" y="150" width="240" height="80" rx="10" class="box"/><text x="1440" y="180" class="box-title" text-anchor="middle">Observability</text><text x="1440" y="200" class="box-sub" text-anchor="middle">RUM · Sentry · OTel</text><text x="1440" y="216" class="box-sub" text-anchor="middle">Datadog / Grafana</text>
+
+  <!-- Layer 2 -->
+  <rect x="30" y="270" width="1540" height="130" rx="14" class="band"/>
+  <text x="50" y="298" class="layer">2 · API Gateway &amp; BFF</text>
+  <rect x="60"  y="320" width="360" height="70" rx="10" class="box"/><text x="240" y="348" class="box-title" text-anchor="middle">GraphQL Gateway (Apollo Router)</text><text x="240" y="366" class="box-sub" text-anchor="middle">Persisted queries · federation across all services</text>
+  <rect x="440" y="320" width="280" height="70" rx="10" class="box"/><text x="580" y="348" class="box-title" text-anchor="middle">REST BFF (per platform)</text><text x="580" y="366" class="box-sub" text-anchor="middle">Screen-optimised payloads</text>
+  <rect x="740" y="320" width="260" height="70" rx="10" class="box"/><text x="870" y="348" class="box-title" text-anchor="middle">Auth (OIDC + MFA)</text><text x="870" y="366" class="box-sub" text-anchor="middle">JWT sessions · device fingerprint</text>
+  <rect x="1020" y="320" width="260" height="70" rx="10" class="box"/><text x="1150" y="348" class="box-title" text-anchor="middle">Rate limiter (Redis)</text><text x="1150" y="366" class="box-sub" text-anchor="middle">Token bucket · per-user</text>
+  <rect x="1300" y="320" width="260" height="70" rx="10" class="box"/><text x="1430" y="348" class="box-title" text-anchor="middle">Feature flags</text><text x="1430" y="366" class="box-sub" text-anchor="middle">Kill switches · experiments</text>
+
+  <!-- Layer 3 -->
+  <rect x="30" y="420" width="1540" height="240" rx="14" class="band"/>
+  <text x="50" y="448" class="layer">3 · Core Services (containerised, per-service DB)</text>
+  <rect x="60"  y="470" width="220" height="170" rx="10" class="box"/><text x="170" y="498" class="box-title" text-anchor="middle">Listing Service</text><text x="170" y="520" class="box-sub" text-anchor="middle">CRUD listings, photos,</text><text x="170" y="536" class="box-sub" text-anchor="middle">amenities, house rules</text><text x="170" y="558" class="box-sub" text-anchor="middle">Emits listing.updated</text>
+  <rect x="300" y="470" width="220" height="170" rx="10" class="box"/><text x="410" y="498" class="box-title" text-anchor="middle">Search Service</text><text x="410" y="520" class="box-sub" text-anchor="middle">Geospatial (H3 cells)</text><text x="410" y="536" class="box-sub" text-anchor="middle">ML ranking (LightGBM)</text><text x="410" y="558" class="box-sub" text-anchor="middle">Reads: OpenSearch</text>
+  <rect x="540" y="470" width="220" height="170" rx="10" class="box"/><text x="650" y="498" class="box-title" text-anchor="middle">Availability &amp; Pricing</text><text x="650" y="520" class="box-sub" text-anchor="middle">Calendar merges,</text><text x="650" y="536" class="box-sub" text-anchor="middle">dynamic pricing, promos</text><text x="650" y="558" class="box-sub" text-anchor="middle">Cache: Redis TTL 60s</text>
+  <rect x="780" y="470" width="220" height="170" rx="10" class="box"/><text x="890" y="498" class="box-title" text-anchor="middle">Booking Service</text><text x="890" y="520" class="box-sub" text-anchor="middle">Saga orchestrator</text><text x="890" y="536" class="box-sub" text-anchor="middle">Idempotent reservations</text><text x="890" y="558" class="box-sub" text-anchor="middle">Strong consistency</text>
+  <rect x="1020" y="470" width="220" height="170" rx="10" class="box"/><text x="1130" y="498" class="box-title" text-anchor="middle">Payments</text><text x="1130" y="520" class="box-sub" text-anchor="middle">Stripe / Adyen / local</text><text x="1130" y="536" class="box-sub" text-anchor="middle">3DS, FX, split payouts</text><text x="1130" y="558" class="box-sub" text-anchor="middle">PCI-DSS enclave</text>
+  <rect x="1260" y="470" width="140" height="80" rx="10" class="box"/><text x="1330" y="498" class="box-title" text-anchor="middle">Messaging</text><text x="1330" y="516" class="box-sub" text-anchor="middle">WebSocket</text><text x="1330" y="532" class="box-sub" text-anchor="middle">Push / email</text>
+  <rect x="1410" y="470" width="150" height="80" rx="10" class="box"/><text x="1485" y="498" class="box-title" text-anchor="middle">Reviews</text><text x="1485" y="516" class="box-sub" text-anchor="middle">Moderation ML</text><text x="1485" y="532" class="box-sub" text-anchor="middle">Sentiment</text>
+  <rect x="1260" y="560" width="140" height="80" rx="10" class="box"/><text x="1330" y="588" class="box-title" text-anchor="middle">Trust &amp; Safety</text><text x="1330" y="606" class="box-sub" text-anchor="middle">Fraud, ID check</text><text x="1330" y="622" class="box-sub" text-anchor="middle">Chargeback ML</text>
+  <rect x="1410" y="560" width="150" height="80" rx="10" class="box"/><text x="1485" y="588" class="box-title" text-anchor="middle">Notifications</text><text x="1485" y="606" class="box-sub" text-anchor="middle">Email · SMS · Push</text>
+
+  <!-- Layer 4 -->
+  <rect x="30" y="680" width="1540" height="90" rx="14" class="band"/>
+  <text x="50" y="708" class="layer">4 · Event Backbone</text>
+  <rect x="60" y="720" width="1500" height="40" rx="10" class="box-brand"/><text x="810" y="746" class="box-title" text-anchor="middle">Kafka — booking.* · listing.* · payment.* · user.* (partitioned by geo shard)</text>
+
+  <!-- Layer 5 -->
+  <rect x="30" y="790" width="1540" height="180" rx="14" class="band"/>
+  <text x="50" y="818" class="layer">5 · Storage &amp; Data Platform</text>
+  <rect x="60" y="840" width="200" height="110" rx="10" class="box-store"/><text x="160" y="866" class="box-title" text-anchor="middle">Listing DB</text><text x="160" y="886" class="box-sub" text-anchor="middle">Postgres · sharded</text><text x="160" y="902" class="box-sub" text-anchor="middle">by host_id · read replicas</text>
+  <rect x="280" y="840" width="200" height="110" rx="10" class="box-store"/><text x="380" y="866" class="box-title" text-anchor="middle">Booking DB</text><text x="380" y="886" class="box-sub" text-anchor="middle">Spanner / CockroachDB</text><text x="380" y="902" class="box-sub" text-anchor="middle">Strong consistency, multi-region</text>
+  <rect x="500" y="840" width="200" height="110" rx="10" class="box-store"/><text x="600" y="866" class="box-title" text-anchor="middle">Search Index</text><text x="600" y="886" class="box-sub" text-anchor="middle">OpenSearch cluster</text><text x="600" y="902" class="box-sub" text-anchor="middle">Geo + faceted</text>
+  <rect x="720" y="840" width="200" height="110" rx="10" class="box-store"/><text x="820" y="866" class="box-title" text-anchor="middle">Cache</text><text x="820" y="886" class="box-sub" text-anchor="middle">Redis Cluster</text><text x="820" y="902" class="box-sub" text-anchor="middle">Availability · pricing</text>
+  <rect x="940" y="840" width="200" height="110" rx="10" class="box-store"/><text x="1040" y="866" class="box-title" text-anchor="middle">Object Store</text><text x="1040" y="886" class="box-sub" text-anchor="middle">S3 + Image CDN</text><text x="1040" y="902" class="box-sub" text-anchor="middle">On-the-fly transforms</text>
+  <rect x="1160" y="840" width="200" height="110" rx="10" class="box-store"/><text x="1260" y="866" class="box-title" text-anchor="middle">Warehouse</text><text x="1260" y="886" class="box-sub" text-anchor="middle">Snowflake / BigQuery</text><text x="1260" y="902" class="box-sub" text-anchor="middle">Feeds ML training</text>
+  <rect x="1380" y="840" width="180" height="110" rx="10" class="box-store"/><text x="1470" y="866" class="box-title" text-anchor="middle">ML Feature Store</text><text x="1470" y="886" class="box-sub" text-anchor="middle">Real-time features</text><text x="1470" y="902" class="box-sub" text-anchor="middle">Ranking, fraud, pricing</text>
+
+  <!-- Layer 6 -->
+  <rect x="30" y="990" width="1540" height="90" rx="14" class="band"/>
+  <text x="50" y="1018" class="layer">6 · Deployment &amp; DevEx</text>
+  <text x="70" y="1050" class="box-sub">Multi-region Kubernetes (blue/green) · GitOps (Argo CD) · Feature flags · Preview envs on Vercel · Chaos testing · SLO error budgets (99.95% booking availability)</text>
+
+  <!-- Connectors -->
+  <path class="arrow" d="M170,230 C170,255 400,255 660,258 L660,150"/>
+  <path class="arrow" d="M410,230 C410,255 660,258 660,258"/>
+  <path class="arrow" d="M660,230 L660,320"/>
+  <path class="arrow" d="M920,230 L920,320"/>
+  <path class="arrow" d="M240,390 L170,470"/>
+  <path class="arrow" d="M240,390 L410,470"/>
+  <path class="arrow" d="M580,390 L650,470"/>
+  <path class="arrow" d="M580,390 L890,470"/>
+  <path class="arrow" d="M870,390 L1130,470"/>
+  <path class="arrow" d="M1150,390 L1330,470"/>
+  <path class="arrow" d="M1150,390 L1485,470"/>
+  <path class="arrow-async" d="M170,640 L170,720"/>
+  <path class="arrow-async" d="M410,640 L410,720"/>
+  <path class="arrow-async" d="M650,640 L650,720"/>
+  <path class="arrow-async" d="M890,640 L890,720"/>
+  <path class="arrow-async" d="M1130,640 L1130,720"/>
+  <path class="arrow-async" d="M1330,640 L1330,720"/>
+  <path class="arrow-async" d="M1485,640 L1485,720"/>
+  <path class="arrow-async" d="M600,760 L600,840"/>
+  <path class="arrow-async" d="M820,760 L820,840"/>
+  <path class="arrow-async" d="M1040,760 L1040,840"/>
+  <path class="arrow-async" d="M1260,760 L1260,840"/>
+  <path class="arrow-async" d="M1470,760 L1470,840"/>
+  <path class="arrow" d="M170,640 L160,840"/>
+  <path class="arrow" d="M890,640 L380,840"/>
+
+  <rect x="1200" y="1020" width="360" height="50" rx="8" fill="#fff" stroke="#ebebeb"/>
+  <line x1="1220" y1="1040" x2="1260" y2="1040" class="arrow"/><text x="1270" y="1044" class="legend">Sync request/response</text>
+  <line x1="1400" y1="1040" x2="1440" y2="1040" class="arrow-async"/><text x="1450" y="1044" class="legend">Async event</text>
+</svg>
